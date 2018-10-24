@@ -1,0 +1,29 @@
+$color-text: #2c3e50;
+$color-bg: white;
+$color-primary: #ff3531;
+$color-success: limegreen;
+$color-error: red;
+$color-waiting: #fda400;
+$color-disabled: #B8B8BB;
+
+$btn-primary-fg: $color-bg;
+$btn-primary-bg: $color-primary;
+$btn-primary-border: $color-primary;
+$btn-primary-bg-hover: darken($btn-primary-bg, 15%);
+$btn-primary-border-hover: darken($btn-primary-bg, 15%);
+
+
+$btn-secondary-fg: $color-text;
+$btn-secondary-bg: $color-bg;
+$btn-secondary-border: $color-text;
+$btn-secondary-bg-hover: $color-text;
+$btn-secondary-fg-hover: $color-bg;
+
+$btn-disabled-fg: lighten($color-disabled, 45%);
+$btn-disabled-bg: $color-disabled;
+$btn-disabled-border: $color-disabled;
+
+$btn-default-border-radius: 0.2em;
+$btn-round-border-radius: 2em;
+
+$input-default-bg: rgba(lighten($color-text, 60%), 0.3);
