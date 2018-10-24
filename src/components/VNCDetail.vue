@@ -38,7 +38,12 @@ export default class VNCDetail extends Vue {
         mode: 'cors',
       });
     } catch (err) {
-      console.log(err);
+      this.$notify({
+        title: 'Restart failed',
+        text: JSON.stringify(err),
+        type: 'error',
+        duration: 5000,
+      });
     }
     this.isRestarting = false;
   }

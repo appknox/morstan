@@ -6,6 +6,7 @@
       <span class="siteheader__title">Device Manager</span>
     </header>
     <router-view/>
+    <notifications position="bottom right" />
   </div>
 </template>
 
