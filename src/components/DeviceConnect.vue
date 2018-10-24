@@ -34,12 +34,12 @@ import hostNameValidator from '@/validators/hostName';
   },
 })
 export default class DeviceConnect extends Vue {
-  statusLoaded = false;
-  url = '';
-  token = '';
-  statusData = {};
+  public statusLoaded = false;
+  public url = '';
+  public token = '';
+  public statusData = {};
 
-  async getStatus () {
+  public async getStatus() {
     const data = await fetch(`${this.url}/status`, {
       method: 'GET',
       headers: {
@@ -56,7 +56,7 @@ export default class DeviceConnect extends Vue {
     Vue.prototype.$authToken = this.token;
   }
 
-  get isInvalidRequest () {
+  get isInvalidRequest() {
     return !this.url || !hostNameValidator(this.url) || !this.token;
   }
 }

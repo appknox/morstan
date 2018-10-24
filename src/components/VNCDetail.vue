@@ -19,14 +19,16 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
+
 @Component
 export default class VNCDetail extends Vue {
+
+  public isRestarting = false;
   @Prop() private isRunning!: boolean;
 
-  isRestarting = false
-
-  async restartVNC () {
+  public async restartVNC() {
     this.isRestarting = true;
+
     try {
       const data = await fetch(`${Vue.prototype.$hostName}/vnc`, {
         method: 'DELETE',

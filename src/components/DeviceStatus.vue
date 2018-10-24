@@ -26,7 +26,7 @@ import VNCDetail from '@/components/VNCDetail.vue';
 @Component({
   components: {
     VNCDetail,
-  }
+  },
 })
 export default class DeviceStatus extends Vue {
   @Prop() private platform!: string;
