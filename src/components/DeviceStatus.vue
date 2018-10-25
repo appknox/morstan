@@ -14,7 +14,7 @@
           </tr>
         </tbody>
       </table>
-      <VNCDetail v-if="vnc" v-bind:is-running="vnc.is_running" />
+      <VNCDetail class="devicestatus__vnc" v-if="vnc" v-bind:is-running="vnc.is_running" />
     </div>
   </div>
 </template>

@@ -1,6 +1,10 @@
 <template>
   <div id="vnc-detail">
-    <div class="vncdetail" v-bind:class="{'vncdetail--success': isRunning && !isRestarting, 'vncdetail--waiting': isRestarting}">
+    <div class="vncdetail" v-bind:class="{
+      'vncdetail--success': isRunning && !isRestarting,
+      'vncdetail--error': !isRunning && !isRestarting,
+      'vncdetail--waiting': isRestarting
+    }">
       <div class="vncdetail__container">
         <div class="vncdetail__label">VNC Server</div>
         <div class="vncdetail__state">
@@ -63,8 +67,7 @@ export default class VNCDetail extends Vue {
   min-height: 1.8em;
   border-radius: 2em;
   width: 100%;
-  background: lighten($color-error, 48%);
-  border: 1px solid lighten($color-error, 43%);
+  border: 1px solid;
 
   &__container {
     display: flex;
@@ -82,6 +85,13 @@ export default class VNCDetail extends Vue {
   &__state {
     color: $color-error;
     width: 40%;
+  }
+  &--error {
+    background: lighten($color-error, 48%);
+    border-color: lighten($color-error, 43%);
+    .vncdetail__state {
+      color: $color-error;
+    }
   }
   &--success {
     background: lighten($color-success, 46%);
