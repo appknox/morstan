@@ -8,29 +8,27 @@
       <!-- Connect inputs -->
       <input class="deviceconnect__input" name="url" type="text" v-model="url" placeholder="Device URL">
       <input class="deviceconnect__input" name="token" type="text" v-model="token" placeholder="Token">
-      <button class="deviceconnect__button" v-on:click="getStatus" v-bind:disabled="isInvalidRequest">Connect</button>
+      <button class="deviceconnect__button" v-on:click="getStatus" v-bind:disabled="isInvalidRequest || isLoading">Connect</button>
 
     </section>
 
     <!-- Response -->
-    <DeviceStatus
-      v-show="statusLoaded"
-      v-bind:platform="statusData.platform"
-      v-bind:platformVersion="statusData.platform_version"
-      v-bind:vnc="statusData.vnc"
-    />
+    <LoadingIndicator v-if="isLoading" size="4" />
+    <DeviceStatus v-else v-show="statusLoaded" v-bind:status="statusData" />
 
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import DeviceStatus from '@/components/DeviceStatus.vue';
 import hostNameValidator from '@/validators/hostName';
+import DeviceStatus from '@/components/DeviceStatus.vue';
+import LoadingIndicator from '@/components/LoadingIndicator.vue';
 
 @Component({
   components: {
     DeviceStatus,
+    LoadingIndicator,
   },
 })
 export default class DeviceConnect extends Vue {
@@ -38,19 +36,33 @@ export default class DeviceConnect extends Vue {
   public url = '';
   public token = '';
   public statusData = {};
+  private isLoading = false;
 
   public async getStatus() {
-    const data = await fetch(`${this.url}/status`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Token ${this.token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-    });
-    this.statusData = await data.json();
-    this.statusLoaded = true;
+    this.isLoading = true;
+    try {
+      const data = await fetch(`${this.url}/status`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${this.token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+      });
+      this.statusData = await data.json();
+      this.isLoading = false;
+      this.statusLoaded = true;
+    } catch (err) {
+      this.isLoading = false;
+      this.statusLoaded = false;
+      this.$notify({
+        title: 'Couldn\'t connect.',
+        text: JSON.stringify(err),
+        type: 'error',
+        duration: 6000,
+      });
+    }
 
     Vue.prototype.$hostName = this.url;
     Vue.prototype.$authToken = this.token;

@@ -62,7 +62,6 @@ export default class VNCDetail extends Vue {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.5em 0.5em 0.5em 1em;
   margin-bottom: 0.2em;
   min-height: 1.8em;
   border-radius: 2em;
@@ -74,6 +73,7 @@ export default class VNCDetail extends Vue {
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+    padding: 0.5em 0.5em 0.5em 1em;
   }
 
   &__label {
