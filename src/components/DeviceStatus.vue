@@ -16,7 +16,7 @@
           <tr>
             <td>Device Type</td>
             <td>
-              <span v-if="IsTablet">Tablet</span>
+              <span v-if="status.IsTablet">Tablet</span>
               <span v-else>Phone</span>
             </td>
           </tr>
@@ -40,14 +40,26 @@
 
       <div class="devicestatus__services devicestatus__section">
         <h4 class="devicestatus__subtitle">Services</h4>
-        <VNCDetail class="devicestatus__vnc" v-if="status.vnc" v-bind:is-running="status.vnc.is_running" />
+        <VNCDetail
+          class="devicestatus__vnc"
+          v-if="status.vnc"
+          v-bind:is-running="status.vnc.is_running"
+          v-bind:port="status.vnc.port"
+        />
+        <ProxyDetail
+          class="devicestatus__proxy"
+          v-if="status.proxy"
+          v-bind:is-running="status.proxy.is_running"
+          v-bind:port="status.proxy.port"
+        />
       </div>
 
       <div class="devicestatus__packages devicestatus__section">
         <h4 class="devicestatus__subtitle">Installed Packages</h4>
-        <ol class="devicestatus__packages__list">
-          <li v-for="pkg in status.installed_packages" v-bind:key=pkg>{{ pkg.name }}</li>
-        </ol>
+        <div class="devicestatus__packages__list">
+          <InstalledApp class="devicestatus__packages__item" v-for="pkg in status.installed_packages" v-bind:key=pkg.name v-bind:name="pkg.name" />
+          <!-- <li v-for="pkg in status.installed_packages" v-bind:key=pkg>{{ pkg.name }}</li> -->
+        </div>
       </div>
 
     </div>
@@ -57,10 +69,14 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import VNCDetail from '@/components/VNCDetail.vue';
+import ProxyDetail from '@/components/ProxyDetail.vue';
+import InstalledApp from '@/components/InstalledApp.vue';
 
 @Component({
   components: {
     VNCDetail,
+    ProxyDetail,
+    InstalledApp,
   },
 })
 export default class DeviceStatus extends Vue {
@@ -105,14 +121,19 @@ export default class DeviceStatus extends Vue {
       padding-right: 0.5em;
     }
   }
+  &__vnc {
+    margin-bottom: 0.5em;
+  }
 
   &__packages {
     &__list {
       margin-top: 0;
       background: $color-fill-gray;
       border-radius: $border-radius;
-      padding: 1em 3em;
       overflow-x: scroll;
+    }
+    &__item:not(:last-child) {
+      border-bottom: 1px solid rgba(lighten($color-text, 10%), 0.1);
     }
   }
 

@@ -32,13 +32,13 @@ import LoadingIndicator from '@/components/LoadingIndicator.vue';
   },
 })
 export default class DeviceConnect extends Vue {
-  public statusLoaded = false;
-  public url = '';
-  public token = '';
-  public statusData = {};
+  private statusLoaded = false;
+  private url = '';
+  private token = '';
+  private statusData = {};
   private isLoading = false;
 
-  public async getStatus() {
+  private async getStatus() {
     this.isLoading = true;
     try {
       const data = await fetch(`${this.url}/status`, {

@@ -12,6 +12,7 @@
           <span v-else-if="isRunning">Running</span>
           <span v-else>Not Running</span>
         </div>
+        <div>{{ port }}</div>
         <div class="vncdetail__action">
           <button class="vncdetail__button" v-show="!isRestarting" v-on:click="restartVNC">Restart</button>
         </div>
@@ -27,10 +28,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class VNCDetail extends Vue {
 
-  public isRestarting = false;
+  private isRestarting = false;
   @Prop() private isRunning!: boolean;
+  @Prop() private port!: string;
 
-  public async restartVNC() {
+  private async restartVNC() {
     this.isRestarting = true;
 
     try {
@@ -129,7 +131,7 @@ export default class VNCDetail extends Vue {
     background: $btn-secondary-bg;
     color: $btn-secondary-fg;
     border: 1px solid $btn-secondary-border;
-    padding: 0.3em 0.8em;
+    padding: 0.1em 0.5em;
     font-size: 0.9em;
     border-radius: $btn-round-border-radius;
     display: flex;
