@@ -21,8 +21,20 @@
             </td>
           </tr>
           <tr>
+            <td>Model</td>
+            <td>{{ status.model }}</td>
+          </tr>
+          <tr>
+            <td>CPU Architecture</td>
+            <td>{{ status.cpu_architecture }}</td>
+          </tr>
+          <tr>
             <td>UUID</td>
             <td>{{ status.uuid }}</td>
+          </tr>
+          <tr>
+            <td>Agent Version</td>
+            <td>{{ status.agent.version }}</td>
           </tr>
         </tbody>
       </table>
